@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
+  <title>Bro's Downfall | The Ultimate Revenge Meme Game 😈</title>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤡</text></svg>" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;800&family=JetBrains+Mono:wght@700;800&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- Background Layer -->
+  <div class="bg-container" id="bgContainer">
+
+    <video
+      id="customBgVideo"
+      class="custom-video-bg hidden"
+      loop
+      muted
+      playsinline>
+    </video>
+
+    <div class="animated-grid" id="animatedGrid"></div>
+    <div class="bg-particles" id="bgParticles"></div>
+    <div class="bg-vignette"></div>
+
+  </div>
+
+  <!-- Main Game Container -->
+  <main class="game-wrapper" id="gameWrapper">
+
+    <!-- Top HUD Bar -->
+    <header class="hud-top">
+
+      <div class="hud-pill sound-control" id="btnToggleSound" title="Toggle Sound (M)">
+        <span class="hud-icon" id="soundIcon">🔊</span>
+        <span class="hud-label" id="soundLabel">SFX ON</span>
+      </div>
+
+      <div class="hud-center-score" id="inGameScoreHud">
+        <span class="score-num" id="currentScore">0</span>
+        <span class="score-combo" id="comboBadge">x1</span>
+      </div>
+
+      <div class="hud-actions">
+
+        <button class="hud-btn" id="btnCustomizer" title="Customize Friend / Revenge Studio">
+          <span>🎭</span> Customize
+        </button>
+
+        <button class="hud-btn" id="btnPause" title="Pause Game (P / Esc)">
+          <span id="pauseIcon">⏸️</span>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- Canvas Viewport -->
+    <div class="canvas-box" id="canvasBox">
+
+      <canvas id="gameCanvas"></canvas>
+
+      <!-- Wasted / Red Flash Effect Overlay -->
+      <div class="wasted-overlay" id="wastedOverlay">
+        <h1 class="wasted-text">EMOTIONAL DAMAGE</h1>
+      </div>
+
+      <!-- DIWALI CELEBRATION OVERLAY -->
+      <div
+        class="diwali-celebration hidden"
+        id="diwaliCelebration"
+        aria-hidden="true">
+
+        <canvas id="fireworksCanvas" class="diwali-canvas"></canvas>
+
+        <div class="diwali-fireworks">
+          <span>🎆</span>
+          <span>✨</span>
+          <span>🧨</span>
+          <span>🎇</span>
+          <span>💥</span>
+          <span>🎆</span>
+          <span>✨</span>
+          <span>🪔</span>
+        </div>
+
+        <div class="diwali-content">
+
+          <div class="diya">🪔</div>
+
+          <h1>HAPPY DIWALI!</h1>
+
+          <p>BRO JUST BECAME A FIRECRACKER! 😂</p>
+
+          <div class="diwali-bottom">
+            🎇 🧨 🎆 🪔 🎆 🧨 🎇
+          </div>
+
+        </div>
+
+        <div class="diwali-sparkles">
+          <span>✨</span>
+          <span>💥</span>
+          <span>🎇</span>
+          <span>✨</span>
+          <span>💥</span>
+          <span>🎆</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Active Taunt Banner -->
+    <div class="taunt-banner" id="tauntBanner">
+
+      <span class="taunt-emoji" id="tauntEmoji">🔥</span>
+
+      <span class="taunt-text" id="tauntText">
+        Bro thinks he can fly!
+      </span>
+
+    </div>
+
+    <!-- START / MAIN MENU OVERLAY -->
+    <div class="screen-overlay" id="menuScreen">
+
+      <div class="menu-card glass-panel pop-in">
+
+        <div class="revenge-badge">⚡ THE REVENGE EDITION</div>
+
+        <h1 class="game-logo">
+          FLAPPY <span class="logo-highlight" id="friendLogoName">BRO</span>
+        </h1>
+
+        <p class="game-tagline">
+          Your friend made a game on you. Time to destroy his ego.
+        </p>
+
+        <!-- Friend Avatar Preview -->
+        <div
+          class="avatar-preview-box"
+          id="menuAvatarTrigger"
+          title="Click to change friend's face!">
+
+          <div class="avatar-ring pulse-ring">
+
+            <img
+              id="menuAvatarImg"
+              src=""
+              alt="Friend's Face"
+              class="avatar-img" />
+
+            <div class="avatar-prop" id="menuAvatarProp">🤡</div>
+
+          </div>
+
+          <button class="avatar-edit-tag">
+            Tap to Change Face
+          </button>
+
+        </div>
+
+        <!-- Game Statistics -->
+        <div class="stats-ribbon">
+
+          <div class="stat-pill">
+            <span class="pill-label">RECORD HIGH</span>
+            <span class="pill-value" id="menuBestScore">0</span>
+          </div>
+
+          <div class="stat-pill">
+            <span class="pill-label">ROASTS DELIVERED</span>
+            <span class="pill-value" id="menuTotalDeaths">0</span>
+          </div>
+
+        </div>
+
+        <button class="btn-primary play-btn" id="btnPlayGame">
+
+          <span class="btn-shine"></span>
+
+          <span class="btn-text">
+            START ROASTING 🚀
+          </span>
+
+        </button>
+
+        <div class="menu-quick-options">
+
+          <button class="btn-secondary" id="btnQuickCustom">
+            ⚙️ Revenge Studio
+          </button>
+
+          <button class="btn-secondary" id="btnHowToPlay">
+            ❓ Controls & Power-ups
+          </button>
+
+        </div>
+
+        <footer class="menu-hint">
+          Press <kbd>SPACE</kbd> or <kbd>CLICK / TAP</kbd> to flap & dodge!
+        </footer>
+
+      </div>
+    </div>
+
+    <!-- GAME OVER / ROAST CERTIFICATE OVERLAY -->
+    <div class="screen-overlay hidden" id="gameOverScreen">
+
+      <div class="game-over-card glass-panel pop-in">
+
+        <!-- Result Video -->
+        <div class="result-video-frame">
+
+          <video
+            id="resultLoopVideo"
+            class="result-loop-video"
+            src="videos/result-loop.mp4"
+            muted
+            loop
+            playsinline
+            preload="auto"
+            aria-label="Game over celebration video">
+          </video>
+
+        </div>
+
+        <div class="go-header">
+
+          <span class="go-badge" id="roastRankBadge">
+            🤡 CERTIFIED CLOWN
+          </span>
+
+          <h2 class="go-title" id="goTitle">
+            BRO CHOKED!
+          </h2>
+
+        </div>
+
+        <!-- Roast Card -->
+        <div class="roast-card-exportable" id="roastCardExport">
+
+          <div class="rc-avatar-frame">
+
+            <img
+              id="roastAvatarImg"
+              src=""
+              alt="Crashed Bro"
+              class="rc-avatar" />
+
+            <div class="rc-clown-stamp" id="roastStamp">
+              SKILL ISSUE
+            </div>
+
+          </div>
+
+          <div class="rc-data">
+
+            <div class="rc-scores">
+
+              <div class="rc-stat">
+                <span class="rc-stat-lbl">SCORE</span>
+                <span class="rc-stat-num" id="goScore">0</span>
+              </div>
+
+              <div class="rc-stat">
+                <span class="rc-stat-lbl">BEST</span>
+                <span class="rc-stat-num" id="goBest">0</span>
+              </div>
+
+            </div>
+
+            <p class="rc-quote" id="goRoastQuote">
+              "Even WiFi signals have better consistency than bro."
+            </p>
+
+          </div>
+
+        </div>
+
+        <!-- Game Over Actions -->
+        <div class="go-actions">
+
+          <button class="btn-primary" id="btnPlayAgain">
+
+            <span class="btn-shine"></span>
+
+            <span>PLAY AGAIN 🔄</span>
+
+          </button>
+
+          <button class="btn-whatsapp" id="btnShareWhatsApp">
+            <span>💬 Send Roast to Friend</span>
+          </button>
+
+          <button class="btn-secondary" id="btnSaveRoastImg">
+            <span>📸 Download Roast Card</span>
+          </button>
+
+          <button class="btn-text-link" id="btnBackToMenu">
+            Back to Main Menu
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CUSTOMIZE MODAL / REVENGE STUDIO -->
+    <div class="screen-modal hidden" id="customizerModal">
+
+      <div class="modal-card glass-panel">
+
+        <div class="modal-header">
+
+          <h3>🎭 Revenge Customizer Studio</h3>
+
+          <button class="btn-close" id="btnCloseModal">
+            ✕
+          </button>
+
+        </div>
+
+        <div class="modal-body">
+
+          <!-- Step 1: Friend's Name -->
+          <div class="setting-group">
+
+            <label class="setting-lbl">
+              Friend's Name / Nickname:
+            </label>
+
+            <input
+              type="text"
+              id="inputFriendName"
+              class="setting-input"
+              maxlength="20"
+              placeholder="e.g. Alex, Rahul, Chomu"
+              value="Bro" />
+
+          </div>
+
+          <!-- Step 2: Friend's Face -->
+          <div class="setting-group">
+
+            <label class="setting-lbl">
+              Friend's Face (Upload or Snap Photo):
+            </label>
+
+            <div class="photo-upload-row">
+
+              <label class="btn-upload" for="faceFileInput">
+                📁 Upload Photo
+
+                <input
+                  type="file"
+                  id="faceFileInput"
+                  accept="image/*"
+                  hidden />
+
+              </label>
+
+              <button class="btn-upload camera-btn" id="btnWebcamSnap">
+                📷 Camera Snap
+              </button>
+
+              <button class="btn-upload reset-face-btn" id="btnResetFace">
+                Reset Face
+              </button>
+
+            </div>
+
+            <!-- Face Presets -->
+            <label class="setting-sublbl">
+              Or Pick A Hilarious Preset Face:
+            </label>
+
+            <div class="preset-faces-grid" id="presetFacesGrid">
+              <!-- Dynamically populated by JavaScript -->
+            </div>
+
+          </div>
+
+          <!-- Step 3: Funny Prop / Disguise -->
+          <div class="setting-group">
+
+            <label class="setting-lbl">
+              Put a Funny Hat/Prop on His Head:
+            </label>
+
+            <div class="props-selector" id="propSelector">
+
+              <button class="prop-btn active" data-prop="none">None</button>
+              <button class="prop-btn" data-prop="🤡">🤡 Clown</button>
+              <button class="prop-btn" data-prop="🕶️">🕶️ Thug Life</button>
+              <button class="prop-btn" data-prop="💩">💩 Poop Hat</button>
+              <button class="prop-btn" data-prop="👑">👑 Fake King</button>
+              <button class="prop-btn" data-prop="🩴">🩴 Chappal</button>
+              <button class="prop-btn" data-prop="😈">😈 Horns</button>
+
+            </div>
+
+          </div>
+
+          <!-- Step 4: Obstacle Theme -->
+          <div class="setting-group">
+
+            <label class="setting-lbl">
+              Obstacle Style:
+            </label>
+
+            <div class="theme-selector" id="obstacleSelector">
+
+              <button class="theme-btn active" data-obstacle="neon">
+                ⚡ Cyber Neon
+              </button>
+
+              <button class="theme-btn" data-obstacle="chappal">
+                🩴 Flying Chappals
+              </button>
+
+              <button class="theme-btn" data-obstacle="exam">
+                📝 F-Grade Exams
+              </button>
+
+              <button class="theme-btn" data-obstacle="bamboo">
+                🎋 Toxic Pipes
+              </button>
+
+            </div>
+
+          </div>
+
+          <!-- Step 5: Sound & Voice Commentary (AI voice removed) -->
+          <div class="setting-group" hidden style="display:none">
+
+            <label class="setting-lbl">
+              TTS Voice Roaster (Speaks your friend's name!):
+            </label>
+
+            <div class="toggle-row">
+
+              <label class="toggle-switch">
+
+                <input
+                  type="checkbox"
+                  id="checkVoiceRoaster"
+                  checked />
+
+                <span class="slider"></span>
+
+              </label>
+
+              <span class="toggle-desc">
+                Talk trash out loud via Voice AI when he crashes!
+              </span>
+
+            </div>
+
+          </div>
+
+          <!-- Step 6: Background Video Upload -->
+          <div class="setting-group">
+
+            <label class="setting-lbl">
+              Custom Background Video (Optional flex!):
+            </label>
+
+            <div class="photo-upload-row">
+
+              <label class="btn-upload" for="bgVideoInput">
+                🎬 Upload MP4 / WebM Background
+
+                <input
+                  type="file"
+                  id="bgVideoInput"
+                  accept="video/mp4,video/webm"
+                  hidden />
+
+              </label>
+
+              <button class="btn-upload reset-face-btn" id="btnRemoveVideoBg">
+                Remove Video
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+          <button class="btn-primary" id="btnSaveCustomizer">
+            SAVE & START ROASTING 🔥
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- HOW TO PLAY / CONTROLS MODAL -->
+    <div class="screen-modal hidden" id="helpModal">
+
+      <div class="modal-card glass-panel">
+
+        <div class="modal-header">
+
+          <h3>🎮 How to Play & Power-Ups</h3>
+
+          <button class="btn-close" id="btnCloseHelp">
+            ✕
+          </button>
+
+        </div>
+
+        <div class="modal-body help-body">
+
+          <div class="help-section">
+
+            <h4>🕹️ Controls</h4>
+
+            <p>
+              <strong>Desktop:</strong>
+              Press <kbd>SPACE</kbd>, <kbd>W</kbd>,
+              <kbd>↑ UP ARROW</kbd> or <kbd>Left Click</kbd> to jump.
+            </p>
+
+            <p>
+              <strong>Mobile:</strong>
+              Tap anywhere on the screen.
+            </p>
+
+            <p>
+              <strong>Pause:</strong>
+              Press <kbd>P</kbd> or <kbd>ESC</kbd>.
+            </p>
+
+          </div>
+
+          <div class="help-section">
+
+            <h4>✨ Crazy Power-Ups (Catch them mid-air!)</h4>
+
+            <ul class="powerup-list">
+
+              <li>
+                <span class="pu-icon">☕</span>
+                <strong>Chai / Energy Boost:</strong>
+                Unlocks Rocket Mode with invincibility & rainbow fart trail!
+              </li>
+
+              <li>
+                <span class="pu-icon">🍕</span>
+                <strong>Junk Food:</strong>
+                Makes bro's head balloon into a giant chubby ball for extra meme points!
+              </li>
+
+              <li>
+                <span class="pu-icon">🕶️</span>
+                <strong>Thug Life Glasses:</strong>
+                Slows down time so you can weave through tight gaps!
+              </li>
+
+              <li>
+                <span class="pu-icon">💎</span>
+                <strong>Meme Diamonds:</strong>
+                +3 bonus points instantly!
+              </li>
+
+            </ul>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- WEBCAM CAPTURE MODAL -->
+    <div class="screen-modal hidden" id="webcamModal">
+
+      <div class="modal-card glass-panel camera-modal">
+
+        <div class="modal-header">
+
+          <h3>📸 Snap Your Friend's Face</h3>
+
+          <button class="btn-close" id="btnCloseWebcam">
+            ✕
+          </button>
+
+        </div>
+
+        <div class="webcam-box">
+
+          <video id="webcamVideo" autoplay playsinline></video>
+
+          <div class="camera-target-circle"></div>
+
+        </div>
+
+        <div class="modal-footer">
+
+          <button class="btn-primary" id="btnCapturePhoto">
+            📸 CAPTURE PHOTO
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Game JavaScript -->
+  <script src="game.js"></script>
+
+</body>
+</html>

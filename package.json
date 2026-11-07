@@ -1,0 +1,14 @@
+{
+  "name": "bros-downfall-revenge-game",
+  "version": "1.0.0",
+  "description": "The Ultimate Revenge Meme Game on your friend",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "serve": "node server.js"
+  },
+  "keywords": ["game", "flappy", "meme", "revenge"],
+  "author": "",
+  "license": "MIT"
+}
